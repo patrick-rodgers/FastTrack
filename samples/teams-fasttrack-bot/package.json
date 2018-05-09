@@ -1,0 +1,38 @@
+{
+  "name": "teams-fasttrack-bot",
+  "version": "0.0.1",
+  "description": "Bot used within Microsoft FastTrack to assist customers",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Patrick Rodgers, Microsoft",
+  "license": "MIT",
+  "dependencies": {
+    "@pnp/logging": "^1.0.4",
+    "botbuilder": "^3.15.0",
+    "request": "^2.85.0",
+    "request-promise-native": "^1.0.5",
+    "restify": "^7.1.1",
+    "tslib": "^1.9.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/microsoft/fasttrack"
+  },
+  "devDependencies": {
+    "@types/request": "^2.47.0",
+    "@types/request-promise-native": "^1.0.14",
+    "@types/restify": "^5.0.7",
+    "ansi-colors": "^2.0.1",
+    "del": "^3.0.0",
+    "fancy-log": "^1.3.2",
+    "gulp": "^3.9.1",
+    "gulp-tslint": "^8.1.3",
+    "pump": "^3.0.0",
+    "rollup": "^0.58.2",
+    "rollup-plugin-sourcemaps": "^0.4.2",
+    "tslint": "^5.10.0",
+    "typescript": "^2.8.3"
+  }
+}
