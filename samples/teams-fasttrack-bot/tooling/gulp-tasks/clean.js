@@ -7,15 +7,16 @@ gulp.task("clean", (done) => {
 
     const directories = [
         "./build",
+        "./publish",
         "./dist",
     ];
 
-    log(`${colors.bgBlue(" ")} Cleaning directories: ${directories.join(", ")}.`);
+    log(`${colors.bgBlue(" ")} Cleaning: ${directories.join(", ")}.`);
     del(directories).then(() => {
-        log(`${colors.bgGreen(" ")} Cleaned directories: ${directories.join(", ")}.`);
+        log(`${colors.bgGreen(" ")} Cleaned: ${directories.join(", ")}.`);
         done();
     }).catch(e => {
-        log(`${colors.bgRed(" ")} Error cleaned directories: ${directories.join(", ")}.`);
+        log(`${colors.bgRed(" ")} Error cleaning: ${directories.join(", ")}.`);
         done(e);
     });
 });

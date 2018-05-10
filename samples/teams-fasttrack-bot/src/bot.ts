@@ -1,10 +1,13 @@
 
 import {
-    ChatConnector,
     UniversalBot,
     MemoryBotStorage,
     Middleware,
 } from "botbuilder";
+
+import {
+    TeamsChatConnector,
+} from "botbuilder-teams";
 
 import {
     createServer,
@@ -16,8 +19,6 @@ import {
 } from "@pnp/logging";
 
 let _botPromise: Promise<UniversalBot> | null = null;
-
-// export type BotDelegate = (b: UniversalBot, resolve: () => void, reject: (reason?: any) => void) => void;
 
 export type BotDelegate = (b: UniversalBot) => void;
 
@@ -31,10 +32,9 @@ function getBot(): Promise<UniversalBot> {
 
         _botPromise = new Promise((resolve) => {
 
-            const connector = new ChatConnector({
-                appId: "55d2e898-d1f3-4bb7-bfdb-4f1e6948b7aa",
-                appPassword: "prwXN316]rnqeYDWQL58:;!",
-                gzipData: true,
+            const connector = new TeamsChatConnector({
+                appId: process.env.MicrosoftAppId,
+                appPassword: process.env.MicrosoftAppPassword,
             });
 
             const bot = new UniversalBot(connector);

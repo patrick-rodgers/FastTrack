@@ -7,48 +7,46 @@ import {
     LogLevel,
 } from "@pnp/logging";
 
-export default function init() {
+Logger.activeLogLevel = LogLevel.Verbose;
+Logger.subscribe(new ConsoleListener());
 
-    Logger.activeLogLevel = LogLevel.Verbose;
-    Logger.subscribe(new ConsoleListener());
+Logger.write("Entering init()", LogLevel.Verbose);
 
-    Logger.write("Entering init()", LogLevel.Verbose);
+usingBot(bot => {
 
-    usingBot(bot => {
+    Logger.write("init() :: Entering usingBot call", LogLevel.Verbose);
 
-        Logger.write("init() :: Entering usingBot call", LogLevel.Verbose);
+    // Entry point of the bot
+    bot.dialog("/", [
+        (session) => {
+            Logger.write("init() :: /", LogLevel.Verbose);
+            session.replaceDialog("/promptButtons");
+        },
+    ]);
 
-        // Entry point of the bot
-        bot.dialog("/", [
-            (session) => {
-                Logger.write("init() :: /", LogLevel.Verbose);
-                session.replaceDialog("/promptButtons");
-            },
-        ]);
-
-        bot.dialog("/promptButtons", [
-            (session: Session) => {
-                Logger.write("init() :: /promptButtons", LogLevel.Verbose);
-                const choices = ["Musician Explorer", "Musician Search"];
-                Prompts.choice(session, "How would you like to explore the classical music bot?", choices);
-            },
-            (session: Session, results: IPromptResult<IFindMatchResult>) => {
-                if (results.response) {
-                    const selection = results.response.entity;
-                    // route to corresponding dialogs
-                    switch (selection) {
-                        case "Musician Explorer":
-                            session.replaceDialog("/musicianExplorer");
-                            break;
-                        case "Musician Search":
-                            session.replaceDialog("/musicianSearch");
-                            break;
-                        default:
-                            session.reset("/");
-                            break;
-                    }
+    bot.dialog("/promptButtons", [
+        (session: Session) => {
+            Logger.write("init() :: /promptButtons", LogLevel.Verbose);
+            const choices = ["Musician Explorer", "Musician Search"];
+            Prompts.choice(session, "How would you like to explore the classical music bot?", choices);
+        },
+        (session: Session, results: IPromptResult<IFindMatchResult>) => {
+            if (results.response) {
+                const selection = results.response.entity;
+                // route to corresponding dialogs
+                switch (selection) {
+                    case "Musician Explorer":
+                        session.replaceDialog("/musicianExplorer");
+                        break;
+                    case "Musician Search":
+                        session.replaceDialog("/musicianSearch");
+                        break;
+                    default:
+                        session.reset("/");
+                        break;
                 }
-            },
-        ]);
-    });
-}
+            }
+        },
+    ]);
+});
+

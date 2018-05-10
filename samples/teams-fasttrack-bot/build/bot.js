@@ -1,4 +1,5 @@
-import { ChatConnector, UniversalBot, MemoryBotStorage, Middleware, } from "botbuilder";
+import { UniversalBot, MemoryBotStorage, Middleware, } from "botbuilder";
+import { TeamsChatConnector, } from "botbuilder-teams";
 import { createServer, } from "restify";
 import { Logger, } from "@pnp/logging";
 let _botPromise = null;
@@ -7,10 +8,9 @@ function getBot() {
     if (_botPromise === null) {
         Logger.write("getBot() :: Bot promise is null, returning.", 0 /* Verbose */);
         _botPromise = new Promise((resolve) => {
-            const connector = new ChatConnector({
-                appId: "55d2e898-d1f3-4bb7-bfdb-4f1e6948b7aa",
-                appPassword: "prwXN316]rnqeYDWQL58:;!",
-                gzipData: true,
+            const connector = new TeamsChatConnector({
+                appId: process.env.MicrosoftAppId,
+                appPassword: process.env.MicrosoftAppPassword,
             });
             const bot = new UniversalBot(connector);
             // TODO:: testing??

@@ -1,1 +1,1 @@
-export default function init(): void;
+export {};

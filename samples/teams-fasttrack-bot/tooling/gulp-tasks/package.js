@@ -7,11 +7,17 @@ const projectRoot = path.resolve(__dirname, "../..");
 
 const rollupPath = ".\\node_modules\\.bin\\rollup";
 
-gulp.task("package", ["build"], (done) => {
+gulp.task("copy-assets", ["clean"], () => {
+
+    return gulp.src(["./assets/**/*.*", "./package.json"]).pipe(gulp.dest("./dist"));
+});
+
+gulp.task("package", ["build", "copy-assets"], (done) => {
 
     exec(`${rollupPath} -c ${path.join(projectRoot, "rollup.dist.config.js")}`, (error, stdout, stderr) => {
 
         if (error === null) {
+
             done();
         } else {
 
