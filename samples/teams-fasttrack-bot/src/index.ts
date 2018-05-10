@@ -1,25 +1,18 @@
 import { usingBot } from "./bot";
 import { Session, IPromptResult, IFindMatchResult, Prompts } from "botbuilder";
-
-import {
-    Logger,
-    ConsoleListener,
-    LogLevel,
-} from "@pnp/logging";
+import { Logger, ConsoleListener, LogLevel } from "@pnp/logging";
 
 Logger.activeLogLevel = LogLevel.Verbose;
 Logger.subscribe(new ConsoleListener());
-
-Logger.write("Entering init()", LogLevel.Verbose);
+Logger.write("Starting bot...", LogLevel.Verbose);
 
 usingBot(bot => {
 
-    Logger.write("init() :: Entering usingBot call", LogLevel.Verbose);
+    Logger.write("Bot started...", LogLevel.Verbose);
 
     // Entry point of the bot
     bot.dialog("/", [
         (session) => {
-            Logger.write("init() :: /", LogLevel.Verbose);
             session.replaceDialog("/promptButtons");
         },
     ]);

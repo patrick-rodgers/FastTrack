@@ -1,29 +1,23 @@
-import { UniversalBot, MemoryBotStorage, Middleware, } from "botbuilder";
-import { TeamsChatConnector, } from "botbuilder-teams";
-import { createServer, } from "restify";
-import { Logger, } from "@pnp/logging";
+import { UniversalBot } from "botbuilder";
+import { Logger } from "@pnp/logging";
+import { applyLogging } from "./config/logging";
+import { applyStorage } from "./config/storage";
+import { connectorFactory } from "./config/connector";
+import { applyMiddleware } from "./config/middleware";
+// promise used to setup the bot
 let _botPromise = null;
-function getBot() {
+const defaultBotConfiguration = [
+    applyLogging,
+    applyStorage,
+    applyMiddleware,
+];
+export function getBot(configuration = defaultBotConfiguration) {
     Logger.write("Entering getBot()", 0 /* Verbose */);
     if (_botPromise === null) {
-        Logger.write("getBot() :: Bot promise is null, returning.", 0 /* Verbose */);
+        Logger.write("getBot() :: Bot promise is null, creating new", 0 /* Verbose */);
         _botPromise = new Promise((resolve) => {
-            const connector = new TeamsChatConnector({
-                appId: process.env.MicrosoftAppId,
-                appPassword: process.env.MicrosoftAppPassword,
-            });
-            const bot = new UniversalBot(connector);
-            // TODO:: testing??
-            bot.set("storage", new MemoryBotStorage());
-            // Setup Restify Server
-            const server = createServer();
-            server.listen(process.env.port || 3978, function () {
-                console.log(`${server.name} listening to ${server.url}`);
-            });
-            server.post("/api/messages", connector.listen());
-            bot.use(Middleware.dialogVersion({ version: 0.2, resetCommand: /^reset/i }));
-            Logger.write("getBot() :: Created new bot instance.", 1 /* Info */);
-            resolve(bot);
+            Logger.write("getBot() :: Creating a new bot instance and resolving", 1 /* Info */);
+            resolve(configuration.reduce((b, f) => f(b), new UniversalBot(connectorFactory())));
         });
     }
     Logger.write("getBot() :: Returning bot promise", 0 /* Verbose */);
