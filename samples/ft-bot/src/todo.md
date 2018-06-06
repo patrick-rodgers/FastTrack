@@ -1,0 +1,6 @@
+- Logging to Azure table
+- SQL connection 
+- query something about a tenant from the cube
+- add more discussions
+- add natural language
+- maybe somethign with timekeeping?? Seems impossible currently

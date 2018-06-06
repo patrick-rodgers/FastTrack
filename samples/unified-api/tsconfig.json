@@ -1,0 +1,33 @@
+{
+    "compilerOptions": {
+        "target": "es2015",
+        "module": "es2015",
+        "declaration": true,
+        "removeComments": false,
+        "types": [],
+        "lib": [
+            "es2015",
+            "dom"
+        ],
+        "outDir": "./build",
+        "rootDir": "./src",
+        "baseUrl": ".",
+        "strict": true,
+        "allowUnreachableCode": false,
+        "forceConsistentCasingInFileNames": true,
+        "moduleResolution": "node",
+        "noUnusedLocals": true,
+        "noUnusedParameters": false,
+        "pretty": false,
+        "experimentalDecorators": true,
+        "noFallthroughCasesInSwitch": true,
+        "inlineSources": true,
+        "sourceMap": true,
+        "skipDefaultLibCheck": true,
+        "skipLibCheck": true,
+        "strictNullChecks": true
+    },
+    "include": [
+        "./src/index.ts"
+    ]
+}
