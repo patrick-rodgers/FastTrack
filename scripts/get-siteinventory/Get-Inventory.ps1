@@ -185,7 +185,7 @@ process {
     
         # save the workbook to the output folder
         $outputWorkbookPath = Join-Path $OutputFolder "inventory.xlsx"
-        $workbook.SaveAs($outputWorkbookPath, 51)| Out-Null
+        $workbook.SaveAs($outputWorkbookPath, 51)
         $excel.Quit()
     }
 }
